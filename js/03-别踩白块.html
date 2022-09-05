@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .stage {
+            width: 400px;
+            height: 400px;
+            margin-left: 50px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid black;
+            margin-top: 100px;
+        }
+
+        .stage .scoreDiv {
+            position: relative;
+            height: 10%;
+            top: 10px;
+            display: flex;
+            justify-content: center;
+            pointer-events: none;
+            z-index: 9;
+        }
+
+        .stage .scoreDiv i {
+            width: 35px;
+            height: 50px;
+            background-image: url("../images/nums.png");
+            display: block;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .stage .main {
+            width: 100%;
+            height: 500px;
+            position: absolute;
+            top: -50px;
+        }
+
+        .stage .main .row .ceil {
+            width: 98px;
+            height: 98px;
+            border: 1px solid black;
+            display: block;
+            float: left;
+        }
+
+        .stage .main .row .ceil.black {
+            background: black;
+        }
+
+        .stage .main .row .ceil.wrong {
+            background: red;
+        }
+
+        .stage .gameover {
+            width: 220px;
+            height: 120px;
+            position: absolute;
+            border: 3px solid black;
+            background: white;
+            top: 140px;
+            left: 90px;
+            border-radius: 20px;
+            font-size: 24px;
+            font-weight: bolder;
+            padding-top: 15px;
+            text-align: center;
+            box-sizing: border-box;
+            display: none;
+        }
+
+        .stage .gameover .start,
+        .stage .gameover .quit {
+            display: inline-block;
+            font-size: 16px;
+            width: 80px;
+            line-height: 40px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid black;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage">
+        <div class="scoreDiv"></div>
+        <div class="main"></div>
+        <!-- <div class="btn">
+            <button id="start">Start</button>
+        </div> -->
+        <div class="gameover">
+            GAME OVER!!</br>
+            <span class="start">重新开始</span>
+            <span class="quit">结束游戏</span>
+        </div>
+    </div>
+
+    <script>
+        // 下落 增加行 到底删除行
+        // 行内随机产生黑块
+        // 点击事件 点击黑块消失 点击黑块以外gameover
+
+        var mainDom = document.querySelector(".main");
+        var scoreDom = document.querySelector(".scoreDiv")
+        var scoreSpan = document.querySelector(".score")
+        var gameoverDom = document.querySelector(".gameover")
+        var startDom = document.querySelector(".start")
+        var quitDom = document.querySelector(".quit")
+
+        // 游戏分数
+        var score = 0;
+
+        // 设置初始速度
+        var speed = 1;
+
+        // 设置点击状态
+        var flag = true;
+
+        // 存放分数的dom
+        var arr = [];
+
+        // 游戏移动
+        var timer = null;
+        function move() {
+            if (flag) {
+
+                timer = window.setInterval(function () {
+
+                    var mainDomTop = mainDom.offsetTop;
+
+                    if (mainDomTop >= 0) {
+
+                        // 创新新的行
+                        createNew();
+
+                        // 超过底部后删除行
+                        if (mainDom.children.length > 5) {
+                            removeLastRow();
+                        }
+
+                        // 检验最后一行是否被点击
+                        isLastRowClick();
+
+                        // 阻止main继续往下
+                        return;
+
+                    }
+
+                    mainDom.style.top = mainDomTop + speed + "px";
+
+                    click();
+
+                }, 20)
+            }
+        }
+
+        // 创建新白块
+        function createNew() {
+            // 创建行
+            var newRow = document.createElement("div")
+            newRow.classList.add("row")
+
+            // 设置随机数
+            var res = Math.floor(Math.random() * 4)
+
+            for (var i = 0; i < 4; i++) {
+                // 创建行内方块
+                var newCeil = document.createElement("i");
+                newCeil.classList.add("ceil")
+
+                // 产生随机黑块
+                if (i === res) {
+                    newCeil.classList.add("black")
+                }
+
+                // 追加到主板
+                newRow.appendChild(newCeil);
+            }
+
+            // 新增的行放到最前面
+            mainDom.insertBefore(newRow, mainDom.firstElementChild);
+
+            mainDom.style.top = -100 + "px";
+
+        }
+
+        // 删除最后一行的函数
+        function removeLastRow() {
+            mainDom.lastElementChild.remove();
+        }
+
+        // 确定最后一行被点击
+        function isLastRowClick() {
+            // 获取最后一行的row自定义属性
+            var lastRowisClicked = mainDom.lastElementChild.getAttribute("data-played");
+            // 如果没有被点击 则不含有该属性 游戏结束
+            if (!lastRowisClicked) {
+                gameoverDom.style.display = "block";
+                clearInterval(timer)
+                flag = false;
+            }
+        }
+
+        // 更新分数视图
+        function scoreUpdate() {
+            var newnum = String(score);
+            for (var i = 0; i < newnum.length; i++) {
+                // 根据newScore的长度创建新的i
+                var newScore = document.createElement("i");
+                // 放入数组
+                arr.push(newScore)
+
+                // 把i追加仅score层
+                scoreDom.appendChild(arr[i])
+
+                // 设置i样式 跟newScore一致
+                arr[i].style.backgroundPositionX = "-40" * String(score)[i] + "px";
+            }
+        }
+
+        // 游戏点击事件
+        function click() {
+            mainDom.onclick = function (e) {
+                // flag=true才可以进行点击 防止游戏结束后依然处于可点击状态
+                if (flag) {
+
+                    // 点击的是否为黑块
+                    if (e.target.classList.contains("black")) {
+
+                        // 移除classname
+                        e.target.classList.remove("black")
+
+                        // 更新分数
+                        score++;
+                        scoreUpdate();
+
+                        // 加速
+                        if (score % 6 == 0) {
+                            speed += 0.5;
+                        }
+
+                        // 给所点击的黑块所在的行添加自定义属性 方便后序检验
+                        e.target.parentNode.setAttribute("data-played", true)
+
+                    } else {
+
+                        // alert的速度比log或者dom函数都要快
+                        // alert("游戏结束")
+                        e.target.classList.add("wrong");
+                        gameoverDom.style.display = "block";
+                        clearInterval(timer)
+                        flag = false;
+                        
+                    }
+                }
+            }
+        }
+
+        // 初始化
+        function init() {
+            for (var i = 0; i < 4; i++) {
+                createNew();
+            }
+            move();
+        }
+        init();
+
+        // 游戏结束后 gameover层显示
+        startDom.onclick = function () {
+            location.reload();
+        }
+
+        quitDom.onclick = function () {
+            window.close();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .game {
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            position: relative;
+            padding-top: 50px;
+        }
+
+        .stage {
+            margin: 30px auto;
+            width: 500px;
+            height: 500px;
+            /* background: skyblue; */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .stage li {
+            width: 100px;
+            height: 100px;
+            background: pink;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0;
+            color: white;
+        }
+
+        .stage li.card {
+            transform: rotateY(180deg);
+            transition: transform 0.3s;
+        }
+
+        .stage li.show {
+            background: orange;
+            transition: transform 0.3s;
+            font-size: 2em;
+            transform: rotateY(360deg);
+        }
+
+        .stage li.equal {
+            transform: rotateY(360deg);
+            background: orange;
+            font-size: 2em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game">
+        <ul class="stage">
+            <!-- <li><i class="fa fa-xxx"></i></li> -->
+        </ul>
+    </div>
+
+    <script src="./jquery-3.6.0.min.js"></script>
+    <script>
+        var icons = ["fa-book", "fa-bed", "fa-bluetooth", "fa-bug", "fa-bus", "fa-bicycle", "fa-feed", "fa-heart"];
+
+        // 成对
+        function double(arr) {
+            var tmp = [];
+            arr.forEach(function (e) {
+                tmp.push(e)
+                tmp.push(e)
+            })
+            return tmp;
+        }
+
+        // 洗牌
+        function shuffle(arr) {
+            arr.sort(function () {
+                return Math.random() - 0.5;
+            })
+            return arr;
+        }
+
+        var d = shuffle(double(icons));
+
+        d.forEach(function (e) {
+            var $li = "<li><i class='fa " + e + "'></i></li>"
+            $(".stage").append($li)
+        })
+
+        $(".stage li").addClass("card")
+        $(".stage li").on("click", function () {
+
+            // if ($(this).hasClass("card")) {
+            $(this).addClass("show")
+            // }
+            var showArr = [];
+
+            $(".stage li").each(function (index, ele) {
+                if (ele.classList.contains("show")) {
+                    showArr.push(ele)
+                }
+            })
+
+            if (showArr.length == 2) {
+                setTimeout(function () {
+                    showArr[0].classList.remove("show")
+                    showArr[1].classList.remove("show")
+
+                    if (showArr[0].isEqualNode(showArr[1])) {
+                        showArr[0].classList.add("equal")
+                        showArr[1].classList.add("equal")
+                    }
+                }, 500)
+            }
+
+            console.log(showArr);
+
+        })
+
+    </script>
+
+</body>
+
+</html>

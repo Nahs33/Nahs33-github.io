@@ -1,0 +1,56 @@
+/* 公共css样式 */
+
+/* 定义版心类 */
+.container{
+    width: 1000px;
+    margin:0 auto;
+}
+
+/* 去掉图片底部缝隙 */
+img{
+    vertical-align: bottom;
+}
+
+/* 超链接的美化 */
+a{
+    /* 去掉下划线 */
+    text-decoration: none;
+    color:#666666;
+}
+a:hover{
+    color:#38b774;
+}
+
+/* 设置整个页面的字体大小和字体名称 */
+body{
+    font-size:12px;
+    font-family:"微软雅黑";
+    /* 最小宽度 */
+    min-width: 1200px;
+}
+
+/* 清除浮动类 */
+.clearfix{
+    *zoom:1;
+}
+.clearfix::after{
+    content:".";
+    display: block;
+    clear:both;
+    visibility: hidden;
+    height: 0;
+}
+/* 左浮动类 */
+.fl{
+    float: left;
+}
+/* 右浮动类 */
+.fr{
+    float: right;
+}
+
+/* 去掉input的边框线与外轮廓线 */
+input{
+    outline:0;
+    border:0;
+}

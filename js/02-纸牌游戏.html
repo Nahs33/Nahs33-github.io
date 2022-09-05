@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .game {
+            width: 600px;
+            height: 600px;
+            margin: 0 auto;
+            position: relative;
+            padding-top: 50px;
+        }
+
+        .stage {
+            margin: 30px auto;
+            width: 500px;
+            height: 500px;
+            /* background: skyblue; */
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-content: center;
+        }
+
+        .stage li {
+            width: 100px;
+            height: 100px;
+            background: pink;
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2em;
+            color: pink;
+            transition: all 0.3s;
+        }
+
+        .stage li.open {
+            color: white;
+        }
+
+        .stage li.equal {
+            background: skyblue;
+            color: white;
+        }
+
+        .box {
+            position: absolute;
+            width: 200px;
+            height: 150px;
+            background: white;
+            top: 50%;
+            left: 50%;
+            margin-top: -70px;
+            margin-left: -100px;
+            text-align: center;
+            font-size: 1.5em;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 0;
+            border: 3px solid black;
+            box-sizing: border-box;
+            border-radius: 10px;
+            visibility: hidden;
+        }
+
+        .box .start,
+        .quit {
+            font-size: 18px;
+            line-height: 30px;
+            width: 100px;
+            height: 40px;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid black;
+        }
+
+        .box .start:hover,
+        .box .quit:hover {
+            cursor: pointer;
+            background: skyblue;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="game">
+        <ul class="stage">
+            <!-- <li><i class="fa fa-xxx"></i></li> -->
+        </ul>
+
+        <div class="box">
+            WINNER!!
+            <div class="start">重新开始</div>
+            <div class="quit">结束游戏</div>
+        </div>
+    </div>
+
+    <script>
+        var stageDom = document.querySelector(".stage");
+        var icons = ["fa-book", "fa-bed", "fa-bluetooth", "fa-bug", "fa-bus", "fa-bicycle", "fa-feed", "fa-heart"];
+        var gamebox = document.querySelector(".box")
+        var startDom = document.querySelector(".start")
+        var quitDom = document.querySelector(".quit")
+
+        // 成对
+        function double(arr) {
+            var tmp = [];
+            arr.forEach(function (e) {
+                tmp.push(e)
+                tmp.push(e)
+            })
+            return tmp;
+        }
+
+        // 洗牌
+        function shuffle(arr) {
+            arr.sort(function () {
+                return Math.random() - 0.5;
+            })
+            return arr;
+        }
+
+        var d = shuffle(double(icons));
+
+        d.forEach(function (e) {
+            var node = document.createElement("li");
+            node.innerHTML = "<i class='fa " + e + "'></i>"
+            stageDom.appendChild(node);
+
+            node.onclick = function () {
+                if (!this.classList.contains("equal")) {
+                    this.classList.add("open")
+
+                    var openArr = [];
+                    for (let i = 0; i < stageDom.children.length; i++) {
+                        if (stageDom.children[i].classList.contains("open")) {
+                            openArr.push(stageDom.children[i]);
+                        }
+                    }
+
+                    if (openArr.length == 2) {
+                        setTimeout(function () {
+
+                            openArr[0].classList.remove("open")
+                            openArr[1].classList.remove("open")
+
+                            if (openArr[0].isEqualNode(openArr[1])) {
+                                openArr[0].classList.add("equal")
+                                openArr[1].classList.add("equal")
+                            }
+
+                        }, 500)
+
+                    }
+
+                }
+
+                setTimeout(function () {
+                    var isAllTrue = Array.prototype.slice.call(stageDom.children).every(function (e) {
+                        console.log(e);
+                        return e.className == "equal";
+                    })
+                    console.log(isAllTrue);
+                    if (isAllTrue) {
+                        gamebox.style.visibility = "visible";
+                    }
+
+                }, 1000)
+
+            }
+        })
+
+        startDom.onclick = function () {
+            location.reload();
+        }
+
+        quitDom.onclick = function () {
+            window.close();
+        }
+
+    </script>
+
+</body>
+
+</html>

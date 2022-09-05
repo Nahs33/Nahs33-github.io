@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <script src="./jquery-3.6.0.min.js"></script>
+  <style>
+    .vediobox {
+      width: 160px;
+      height: 100px;
+      border-radius: 7px;
+      background: url("./images/486142478_dc4dcb-0001.jpg");
+      background-size: 1600px 1000px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    /* 字幕遮罩层 */
+    .vediobox:hover::after {
+      content: "";
+      position: absolute;
+      background: rgba(12, 12, 12, 0.3);
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .jindutiao {
+      border: 1px solid black;
+      height: 2px;
+      position: absolute;
+      width: 80%;
+      left: 10px;
+      top: 5px;
+      border-radius: 10px;
+    }
+
+    .jindutiao div {
+      height: 2px;
+      background: rgb(129, 127, 127);
+    }
+
+    .danmu1,
+    .danmu2 {
+      top: 0px;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      overflow: hidden;
+      z-index: 15;
+    }
+
+    .danmu1 p,
+    .danmu2 p {
+      position: absolute;
+      font-size: 12px;
+      white-space: nowrap;
+      color: white;
+    }
+
+    .time {
+      width: 160px;
+      height: 100px;
+      border-radius: 10px;
+      position: absolute;
+      left: 4px;
+      top: 82px;
+      font-size: 12px;
+      color: white;
+      z-index: 11;
+    }
+
+    .fengmian img {
+      width: 160px;
+      height: 100px;
+      z-index: 9;
+      position: absolute;
+    }
+
+    .mask {
+      position: absolute;
+      background: rgba(80, 80, 82, 0.3);
+      width: 100%;
+      height: 100%;
+      z-index: 10;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- 1视频时长 -->
+  <!-- 弹幕效果：写的随机高度+一条动画效果结束再发送一条 别说我没完成^^ -->
+  <!-- 1进度条 -->
+  <!-- 1背景图 -->
+
+  <div class="vediobox">
+    <div class="jindutiao">
+      <div></div>
+    </div>
+    <div class="danmu1"></div>
+    <div class="danmu2"></div>
+    <div class="time"></div>
+    <div class="mask"></div>
+    <div class="fengmian"><img src="./images/eee63cd.webp" alt=""></div>
+  </div>
+
+  <script>
+    // https://www.bilibili.com/anime/?spm_id_from=333.1007.0.0
+    var pvideo = {
+      duration: 1303,
+      img_x_len: 10,
+      img_y_len: 10,
+      img_x_size: 480,
+      img_y_size: 270,
+      image: [
+        "//bimp.hdslb.com/videoshotpvhdboss/486142478_dc4dcb-0001.jpg",
+        "//bimp.hdslb.com/videoshotpvhdboss/486142478_dc4dcb-0002.jpg",
+      ],
+      index: [
+        0, 0, 8, 14, 20, 25, 31, 39, 50, 61, 67, 73, 80, 87, 93, 104, 116, 126, 132, 138, 144, 152, 159, 170, 177,
+        186, 196, 207, 215, 224, 231, 238, 244, 249, 255, 260, 265, 271, 278, 283, 290, 297, 303, 311, 319, 330, 335,
+        350, 360, 365, 372, 383, 390, 401, 406, 411, 421, 428, 434, 444, 450, 457, 467, 472, 481, 487, 497, 502, 514,
+        520, 534, 542, 547, 555, 562, 568, 575, 581, 587, 592, 598, 605, 610, 615, 621, 633, 642, 650, 658, 668, 677,
+        690, 696, 702, 709, 715, 720, 733, 740, 746, 751, 759, 767, 776, 782, 790, 798, 804, 814, 826, 833, 840, 850,
+        856, 863, 872, 878, 886, 896, 903, 911, 918, 929, 937, 948, 953, 959, 965, 973, 979, 985, 994, 1001, 1015,
+        1022, 1028, 1034, 1040, 1047, 1059, 1064, 1071, 1077, 1084, 1090, 1099, 1105, 1111, 1121, 1130, 1139, 1150,
+        1156, 1162, 1171, 1178, 1184, 1191, 1197, 1203, 1210, 1216, 1221, 1228, 1233, 1242, 1250, 1260, 1272, 1282,
+        1292, 1297
+      ],
+    };
+    var dm = [
+      "章鱼哥还是没有胜过强风暴雨(doge)",
+      "日本裁判",
+      "日本裁判",
+      "海绵宝宝笑死我了",
+      "黑人小哥",
+      "堡垒之夜",
+      "最喜欢的一集",
+      "最喜欢的一集",
+      "喜欢",
+      "我怎么觉得派大星这个配音我在神奇宝贝里听过",
+      "我看见你了",
+      "但凡章鱼哥早点回去都不至于这样",
+      "这……这我还真有可能“模仿”",
+      "为什么非要执着于台配或者央配呢",
+      "派总依旧稳定输出",
+      "包租公～",
+      "为什么台配的海绵宝宝跟低能儿似的",
+      "井字游戏，其实可以先手必胜的",
+      "我小时候就看的台配",
+      "终于找到了",
+    ];
+  </script>
+
+  <script>
+
+    // init
+    $(".time").hide()
+    $(".mask").hide()
+
+    // 视频时长
+    $(".time").text(parseInt(pvideo.duration / (60) % 60) + ":" + parseInt(pvideo.duration % 60))
+
+    // 节流标志
+    var flag = true;
+
+    var timer = null;
+    // 鼠标移动事件
+    $(".vediobox").hover(function () {
+      $(".time").show()
+      $(".mask").show()
+
+      // 停止一段时间后再进入动画
+      setTimeout(function () {
+        $(".fengmian").hide()
+        $(".mask").hide()
+        $(".jindutiao").show()
+        $(".danmu1").show()
+        $(".danmu2").show()
+
+        // 弹幕不断出现
+        timer = setInterval(function () {
+          // 节流 上一条划完才有下一条
+          if (flag) {
+            flag = false;
+            
+            // 弹幕效果
+            addDanmu(".danmu1", 3);
+
+            setTimeout(() => {
+              addDanmu(".danmu2", 20);
+            }, 1000)
+
+            // 节流
+            setTimeout(() => {
+              flag = true
+            }, 6000)
+          }
+        })
+
+      }, 1000)
+
+      // 鼠标在画面上移动时触发进度条和背景变化
+      $(".vediobox").mousemove(function (e) {
+
+        // 进度条
+        jindutiao(e)
+
+        // 背景移动
+        bgMove(e)
+
+      })
+
+    }, function () {
+      // 鼠标移出事件
+      $(".jindutiao").hide()
+      $(".danmu1").hide()
+      $(".danmu2").hide()
+      $(".time").hide()
+      $(".fengmian").show()
+      $(".mask").hide()
+      clearInterval(timer)
+    })
+
+
+    // 封装一个获取随机整数的函数
+    function getRandom(min, max) {
+      return Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    // 弹幕出现
+    function addDanmu(selector, n) {
+
+      // 随机弹幕
+      var res = getRandom(0, dm.length - 1)
+
+      // 创建弹幕
+      var $p = "<p>" + dm[res] + "</p>";
+      $(selector).append($p)
+
+
+      // 随机高度
+      var dmtop = getRandom(0, 20);
+
+      // 设置高度
+      $(selector).find("p").css({
+        // p出现的高度
+        top: 0 + n,
+        left: 160
+      })
+
+      // 弹幕动画
+      $(selector).find("p").animate({ left: - $(selector).find("p").width() }, 5000, "linear", function () {
+        // 移除p
+        $(this).remove();
+      })
+
+    }
+
+    // 进度条
+    function jindutiao(e) {
+
+      var x = e.pageX - $(".danmu1").offset().left;
+      var y = e.pageY - $(".danmu1").offset().top;
+
+      $(".jindutiao>div").css("width", x / 160 * $(".jindutiao").width())
+
+    }
+
+    // 背景图移动
+    function bgMove(e) {
+
+      // 获取当前x位置
+      var x = e.pageX - $(".vediobox").offset().left;
+
+      // 在背景中的百分比
+      var xPercent = Math.round(x / $(".vediobox").width() * 100)
+
+      // 100张图 最大值99
+      xPercent = xPercent === 100 ? 99 : xPercent
+
+      // 10行10列
+      var row = Math.floor(xPercent / 10);
+      var col = xPercent % 10;
+
+      // 鼠标移动时背景图的position
+      var yPosition = -row * $(".vediobox").height()
+      var xPosition = -col * $(".vediobox").width()
+
+      // 更新position
+      $(".vediobox").css({
+        backgroundPositionX: xPosition,
+        backgroundPositionY: yPosition
+      })
+
+    }
+
+  </script>
+</body>
+
+</html>

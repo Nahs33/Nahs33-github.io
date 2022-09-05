@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/index.css">
+    <style>
+        .wrong {
+            display: block;
+            background: pink;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="stage">
+        <div class="begin">
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="main"></div>
+        <div class="gameover">
+            <img src="../images/level1.png" alt="">
+            Game Over!! </br>
+            得分为：<span></span>
+            <div class="start">重新开始</div>
+            <div class="quit">结束游戏</div>
+        </div>
+        <div class="score"></div>
+    </div>
+
+    <script>
+        var mainEl = document.querySelector(".main")
+        var gameoverEl = document.querySelector(".gameover")
+        var startDom = document.querySelector(".start")
+        var quitDom = document.querySelector(".quit")
+        var scoreEl = document.querySelector(".score")
+        var gameoverSpan = document.querySelector(".gameover span")
+        var beginEl = document.querySelector(".begin")
+        var beginbtn = beginEl.querySelector("div:nth-child(2)")
+
+
+        // 创建新数组，将动态dot放进数组
+        var dots = [];
+
+        // 初始速度
+        var speed = 0.001;
+
+        // 点击次数
+        var num = 0;
+
+        // 点击状态
+        var flag = true;
+
+        // 存放score里新创建的i，方便获取
+        var arr = [];
+
+        // 添加音乐
+        var music = [
+            [
+                25, 21, 22, 23, 24, 25, 21, 21, 26, 24, 25, 26, 27, 31, 21, 21, 24, 25, 24, 23, 22, 23, 24, 23, 22, 21, 17,
+                21, 22, 23, 21, 22, 25, 21, 22, 23, 24, 25, 21, 21, 26, 24, 25, 26, 27, 31, 21, 21, 24, 25, 24, 23, 22, 23,
+                24, 23, 22, 21, 22, 23, 22, 21, 17, 21,
+            ],
+            [
+                23, 22, 21, 17, 16, 15, 16, 17, 21, 17, 16, 15, 14, 13, 14, 12, 21, 17, 21, 11, 7, 15, 12, 13, 11, 21, 17, 16,
+                17, 23, 25, 26, 24, 23, 22, 24, 24, 23, 21, 17, 16, 15, 14, 13, 12, 14, 13, 12, 11, 12, 13, 14, 15, 12, 15,
+                14, 13, 16, 15, 14, 15, 14, 13, 12, 11, 6, 16, 17, 21, 17, 16, 15, 14, 13, 12, 16, 15, 16, 15, 14, 13, 23, 22,
+                21, 22, 21, 23, 22, 24, 25, 23, 24, 25, 23, 24, 25, 15, 16, 17, 21, 22, 23, 24, 23, 21, 22, 23, 13, 14, 15,
+                16, 15, 14, 15, 13, 14, 15, 14, 16, 15, 14, 13, 12, 13, 12, 11, 12, 13, 14, 15, 16, 14, 16, 15, 16, 17, 21,
+                15, 16, 17, 21, 22, 23, 24, 25, 23, 21, 22, 23, 22, 21, 22, 17, 21, 22, 23, 22, 21, 17, 21, 16, 17, 21, 11,
+                12, 13, 14, 13, 12, 13, 21, 17, 21, 16, 21, 17, 16, 15, 14, 15, 14, 13, 14, 15, 16, 17, 11, 16, 21, 17, 21,
+                17, 16, 17, 21, 22, 21, 17, 21, 16, 17, 23, 13, 14, 13, 12, 22, 23, 22, 21, 13, 11, 16, 15, 5, 4, 5, 6, 16,
+                17, 16, 17, 5, 4, 5, 6, 16, 15, 16, 17, 17, 16, 17, 11, 21, 22, 21, 17, 7, 11, 7, 6, 16, 15, 16, 17, 7, 13,
+                12, 11, 21, 22, 24, 23, 13, 15, 23, 21, 24, 23, 24, 22, 15, 14, 15, 13, 21, 17, 21, 13, 15, 15, 16, 17, 15,
+                13, 21, 22, 23, 21, 23, 23, 22, 21, 17, 16, 16, 15, 16, 17, 21, 23, 22, 21, 23,
+            ],
+        ];
+
+        // 获取music中任意谱子
+        var puzi = music[Math.floor(Math.random() * (music.length))]
+
+
+        // 工厂函数
+        function Dot(y) {
+            this.x = Math.floor(Math.random() * 4);
+            this.y = y;
+
+            this.node = document.createElement("i");
+            // 在y=-1时创建元素添加style 如果没有在创建的时候写入top就会在第一行闪现
+            this.update();
+            mainEl.appendChild(this.node)
+
+            // 外层this为对象dot 实例对象
+            var _this = this;
+            this.node.onclick = function () {
+                // console.log(_this);
+
+                // 可点击状态
+                if (flag) {
+
+                    // 限制按顺序点击 判断点击的元素是不是 所有还没点的第一个
+                    var firstUnPlayed = dots.filter(function (dot) {
+                        return !dot.played;
+                    })[0];
+
+                    // firstUnPlayed.node  === this
+                    if (this.isSameNode(firstUnPlayed.node)) {
+
+                        // 内层this指向dom <i></i>
+                        _this.node.classList.add("played");
+                        _this.played = true;
+                        // console.log(_this);
+
+                        // 播放音乐
+                        var node = document.createElement("audio");
+                        // music是dot的属性 所以是_this实例对象
+                        node.src = "../music/sound_" + _this.music + ".mp3";
+                        node.play();
+
+                        // 点击累加分数
+                        num++;
+
+                        // 阻止冒泡 绑在最内层事件上
+                        event.stopPropagation();
+
+                        // 游戏加分
+                        var newnum = String(num);
+                        for (var i = 0; i < newnum.length; i++) {
+                            // 根据newnum的长度创建新的i
+                            var newScore = document.createElement("i");
+                            // 放入数组
+                            arr.push(newScore)
+
+                            // 反序
+                            // scoreEl.insertBefore(arr[i], scoreEl.firstElementChild)
+                            // 把i追加仅score层
+                            scoreEl.appendChild(arr[i])
+
+                            // 设置i样式 跟newnum一致
+                            arr[i].style.backgroundImage = "url(../images/nums.png)";
+                            arr[i].style.backgroundPositionX = "-51" * String(num)[i] + "px";
+                        }
+                    }
+
+                }
+
+            }
+        }
+
+        // dot下落
+        Dot.prototype.move = function () {
+            this.y += speed;
+        }
+
+        // 更新
+        Dot.prototype.update = function () {
+            this.node.style.left = this.x * 90 + "px";
+            this.node.style.top = this.y * 90 + "px";
+        }
+
+        // 初始化
+        function init() {
+            // 先产生3个dot
+            for (var i = 5; i > 0;
+                i--) {
+                // i-2为第一个dot出现的位置
+                var d = new Dot(i - 2);
+
+                // 把铺子里的第一个放在最后一个
+                var tmp = puzi.shift();
+                puzi.push(tmp)
+                // 添加对象dot的属性music 属性值tmp
+                d.music = tmp;
+
+                dots.push(d);
+            }
+        }
+        init();
+
+
+        // 开始游戏
+        beginbtn.onclick = function () {
+
+            beginEl.style.display = "none";
+
+            // 游戏主体
+            var id = window.setInterval(function () {
+
+                // 每一帧移动
+                dots.forEach(function (dot) {
+                    dot.move();
+                    dot.update();
+                })
+
+                // 新增一个
+                if (dots[dots.length - 1].y >= 0) {
+                    var d = new Dot(-1);
+                    // 把铺子里的第一个放在最后一个
+                    var tmp = puzi.shift();
+                    puzi.push(tmp)
+                    // 添加对象dot的属性music 属性值tmp
+                    d.music = tmp;
+
+                    dots.push(d);
+                }
+
+                // 游戏结束(触底)
+                // 此处的y要+1 为了保证 已点击的dot完全离开当前视线框内
+                var firstUnPlayed = dots.filter(function (dot) {
+                    return !dot.played
+                })[0];
+                // firstUnPlayed 第一个没有被点击的(不含类名played)
+                if (firstUnPlayed && (firstUnPlayed.y + 1) * 90 > 640) {
+                    clearInterval(id);
+                    // 游戏结束层显示
+                    gameoverEl.style.visibility = "visible";
+                    flag = false;
+                }
+
+                // 删除已点击的dot
+                var firstPlayed = dots.filter(function (dot) {
+                    return dot.played
+                })[0];
+                // firstPlayed 第一个被点击的(添加了类名played)
+                if (firstPlayed && firstPlayed.y * 90 > 640) {
+                    mainEl.removeChild(firstPlayed.node)
+                    // 删除数组里的dot
+                    dots.splice(dots.indexOf(firstPlayed), 1)
+                }
+
+                // 游戏加速
+                if (num % 3 === 0) {
+                    speed += 0.0005;
+                }
+
+                // 打印分数
+                gameoverSpan.innerText = num;
+
+            }, 50)
+
+            // 点击空白处 游戏结束
+            mainEl.onclick = function () {
+                // 游戏结束后不可点击
+                if (flag) {
+
+                    // 获得dots内的第一个dot的y
+                    var dotFirstY;
+                    for (var i = 0; i < dots.length; i++) {
+                        dotFirstY = dots[0].y;
+                    }
+
+                    // 比较当前点击的位置是否在dot出现的范围内 范围内可更换视图 范围外直接结束游戏
+                    if (event.clientY <= (dotFirstY + 1) * 90) {
+                        var x = Math.floor(event.clientX / 90);
+                        // 获取与当前点击位置相近的实例对象
+                        var firstWrongClick = dots.find(function (dot) {
+                            return dot.y * 90 <= event.clientY;
+                        })
+                        var y = firstWrongClick.y
+                        // 创建新dom
+                        var node = document.createElement("i");
+                        // 更换视图
+                        node.classList.add("wrong")
+                        // 更新位置
+                        node.style.left = x * 90 + "px";
+                        node.style.top = y * 90 + "px";
+                        // 追加到游戏版面
+                        mainEl.appendChild(node);
+                    }
+
+                    clearInterval(id);
+                    gameoverEl.style.visibility = "visible";
+
+                    // 游戏结束后不可点击
+                    flag = false;
+                }
+            }
+
+        }
+
+        // 游戏结束后 gameover层显示
+        startDom.onclick = function () {
+            location.reload();
+        }
+
+        quitDom.onclick = function () {
+            window.close();
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,152 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+.stage {
+    width: 100%;
+    height: 100vh;
+    max-width: 580px;
+    margin: 0 auto;
+    background-image: url("../images/bg.png");
+    background-size: 100% auto;
+
+    .begin {
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        background: url("../images/bg.png");
+        background-size: 100%;
+        top: 0;
+        left: 0;
+        z-index: 1;
+
+        div {
+            position: absolute;
+
+            &:nth-child(1) {
+                background: url('../images/jingling.png') no-repeat -1px -1px;
+                background-size: 491px 234px;
+                width: 201px;
+                height: 51px;
+                top: 20px;
+                left: 50%;
+                margin-left: -100px;
+            }
+
+            &:nth-child(2) {
+                background: url('../images/jingling.png') no-repeat -204px -1px;
+                background-size: 491px 234px;
+                width: 186px;
+                height: 66px;
+                top: 50%;
+                left: 50%;
+                margin-left: -93px;
+            }
+
+            &:nth-child(3) {
+                background: url('../images/jingling.png') no-repeat -1px -150px;
+                background-size: 491px 234px;
+                width: 315px;
+                height: 80px;
+                left: 50%;
+                bottom: 35px;
+                margin-left: -157px;
+
+            }
+        }
+    }
+
+    .gameover {
+        font-size: 28px;
+        font-weight: bolder;
+        width: 300px;
+        height: 200px;
+        background: white;
+        position: absolute;
+        top: 40%;
+        left: 50%;
+        margin-left: -156px;
+        visibility: hidden;
+        border: 3px solid black;
+        border-radius: 15px;
+        text-align: center;
+        padding-top: 10px;
+
+        img {
+            position: absolute;
+            top: -68px;
+            left: 20px;
+            width: 250px;
+            height: 65px;
+        }
+
+        .start,
+        .quit {
+            font-size: 18px;
+            line-height: 40px;
+            width: 110px;
+            height: 40px;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 10px;
+            border: 2px solid black;
+            cursor: pointer;
+            margin: 10px auto;
+        }
+
+    }
+
+    .main {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+
+        i {
+            width: 90px;
+            height: 90px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-image: url("../images/jingling.png");
+            background-position: -181px -75px;
+            background-size: 545px 258px;
+
+            &.played {
+                background-image: url(../images/playing.png);
+                background-repeat: no-repeat;
+                background-position: center;
+                background-size: 33%;
+
+            }
+
+            &.wrong {
+                background-position: -1px -57px;
+                border-radius: 10px;
+            }
+        }
+    }
+
+    .score {
+        position: relative;
+        // width: 50%;
+        height: 10%;
+        top: 10px;
+        display: flex;
+        justify-content: center;
+        // 鼠标穿透
+        pointer-events: none;
+
+        i {
+            width: 15%;
+            height: 100%;
+            background-image: url(../images/nums.png);
+            display: block;
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+    }
+
+}

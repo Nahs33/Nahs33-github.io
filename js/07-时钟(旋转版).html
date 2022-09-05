@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .box{
+            background: rgb(255, 211, 218);
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+        }
+        .tail{
+            position: relative;
+        }
+        .tail i {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform-origin: center 250px;
+            display: block;
+            color: rgb(255, 255, 255);
+            font-size: 20px;
+            font-family: "微软雅黑";
+        }
+        .tail .b{
+            width: 6px;
+            height: 30px;
+            background: rgb(240, 238, 238);
+            margin-left: -3px;
+            line-height: 90px;
+            text-indent: -10px;
+        }
+        .tail .s{
+            width: 4px;
+            height: 16px;
+            background: rgb(240, 237, 237);
+            margin-left: -2px;
+        }
+        .needles{
+            position: relative;
+        }
+        .needles i{
+            display: block;
+            position: absolute;
+            left: 50%;
+            transform-origin: center bottom;
+            border-top-left-radius: 10px 150px;
+            border-top-right-radius: 10px 150px;
+        }
+        .needles .hh{
+            width: 15px;
+            height: 90px;
+            background: rgb(246, 164, 177);
+            margin-left: -8px;
+            top: 160px;
+        }
+        .needles .mm{
+            width: 10px;
+            height: 140px;
+            background: rgb(244, 183, 193);
+            margin-left: -5px;
+            top: 110px;
+        }
+        .needles .ss{
+            width: 5px;
+            height: 190px;
+            background: orange;
+            margin-left: -3px;
+            top: 60px;
+            transition: all 0.9s;
+        }
+        .needles .circle{
+            width: 30px;
+            height: 30px;
+            background: rgb(225, 141, 141);
+            top: 235px;
+            left: 50%;
+            margin-left: -15px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <div class="tail">
+        </div>
+        <div class="needles">
+            <i class="hh"></i>
+            <i class="mm"></i>
+            <i class="ss"></i>
+            <i class="circle"></i>
+        </div>
+    </div>
+    <script>
+        var tailEl = document.querySelector(".tail")
+        var count = 0;
+        for(let i = 0 ; i < 60 ; i++){
+            var node = document.createElement("i");
+            if( i % 5 === 0 ){
+                node.className = "b";
+                if(i == 0 ){
+                    node.innerHTML = 12;
+                }else{
+                    node.innerHTML = ++count;
+                }
+            }else{
+                node.className = "s";
+            }
+            node.style.transform = "rotate("+i*6+"deg)";
+            tailEl.appendChild(node)
+        }
+        
+        setInterval(function(){
+            var now = new Date();
+            
+            var needlesEl = document.querySelector(".needles");
+
+
+            var hhDom = needlesEl.getElementsByTagName("i")[0];
+            var mmDom = needlesEl.getElementsByTagName("i")[1];
+            var ssDom = needlesEl.getElementsByTagName("i")[2];
+    
+            var sec = now.getSeconds();
+            var min = now.getMinutes();
+            var hour = now.getHours();
+
+            hhDom.style.transform = "rotate("+(hour*30+(30/60*min))+"deg)";
+            mmDom.style.transform = "rotate("+(min*6+(6/60*sec))+"deg)";
+            ssDom.style.transform = "rotate("+sec*6+"deg)";
+
+        },1000)
+    </script>
+</body>
+</html>

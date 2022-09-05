@@ -1,0 +1,350 @@
+.container{
+    margin: 0 auto;
+    width: 1000px;
+}
+header{
+    background: #191d3a;
+    height: 58px;
+    min-width: 1226px;
+}
+.nav .logo{
+    float: left;        
+}
+.nav .logo img{
+    margin-top: 8px;
+    height: 40px;
+    cursor: pointer;
+}
+.nav .top_nav{
+    width: 636px;
+    height: 58px;
+    float: left;
+    margin-left: 49px;
+}
+.nav .top_nav ul li{
+    width: 87px;
+    float: left;
+    line-height: 58px;
+    box-sizing: border-box;
+    padding: 0 px;
+    border-left: 1px solid #252947;
+    text-align: center;
+}
+.nav .top_nav ul li:nth-of-type(2){
+    background: #252947;
+}
+.nav .top_nav ul li:nth-of-type(2) a{
+    color: white;
+}
+.nav .top_nav ul li:last-child{
+    border-right: 1px solid #252947;
+}
+.nav .top_nav ul li a{
+    color: #778093;
+    font-size: 14px;
+}
+.nav .top_nav ul li a:hover{
+    color: white;
+}
+.nav .top_nav .join{
+    width: 102px;
+    height: 35px;
+    background: #38b774;
+    border-radius: 5px;
+    float: left;
+    text-align: center;
+    line-height: 35px;
+    margin-top: 12px;
+    margin-left: 10px;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    border: 1px solid #38b774;
+}
+.nav .top_nav .join:hover{
+    background: #2ba364;
+}
+.nav .language{
+    float: right;
+}
+.nav .language ul{
+    width: 63px;
+}
+.nav .language ul li{
+    float: left;
+    line-height: 58px;
+    color: #778093;
+    font-size: 14px;
+    cursor: pointer;
+}
+.nav .language ul li:hover{
+    color: #38b774;
+}
+.nav .language ul li:first-child{
+    margin-right: 15px;
+    color: #38b774;
+}
+#banner{
+    background: url(../images/gamebanner.jpg);
+    background-repeat: repeat-x;
+    height: 254px;
+    background-position: center top;
+    min-width: 1226px;
+}
+#content .title{
+    padding: 35px 0 22px;
+    border-bottom: 1px solid #c7d6e5;
+    margin-bottom: 20px;
+    position: relative;
+}
+.title .content_title{
+    font-size: 21px;
+    font-weight: 600;
+    color: #444866;
+}
+.title .content_title::before{
+    display: inline-block;
+    color: transparent;
+    content: "·";
+    width: 23px;
+    height: 20px;
+    background: url(../images/location.png);
+    background-position: 0 -97px;
+    margin-right: 8px;
+}
+.title a{
+    float: right;
+    line-height: 20px;
+    color: #444866;
+}
+.title a::before{
+    content: "·";
+    display: inline-block;
+    color: transparent;
+    width: 5px;
+    height: 8px;
+    background: url(../images/icon.png);
+    background-position: 0 -150px;
+    position: relative;
+    top: 6px;
+    left: 0;
+    margin-right: 8px;
+}
+.title .home{
+    float: right;
+    width: 25px;
+    height: 25px;
+    position: absolute;
+    top: 35px;
+    right: 70px;
+    background: url(../images/home.png) no-repeat center top/80%;
+    cursor: pointer;
+}
+#content .game{
+    /* background: tomato; */
+    height: 780px;
+}
+.game .left{
+    float: left;
+    width: 195px;
+    height: 100%;
+    color: #444866;
+    margin-right: 45px;
+}
+.game .left .up,.down{
+    height: 85px;
+    /* background-color: slateblue; */
+    border-bottom: 1px solid #c7d6e5;
+    line-height: 85px;
+    font-size: 17px;
+    cursor: pointer;
+}
+.game .left .up{
+    color: #38b774;
+}
+.game .left .up::after{
+    width: 15px;
+    height: 15px;
+    content: "·";
+    color: transparent;
+    background: url(../images/arrow.png) no-repeat center;
+    margin-left: 69px;
+}
+.game .left .char1,.char2{
+    float: left;
+    background: url(../images/pad.png) no-repeat;
+    width: 33px;
+    height: 45px;
+    margin: 25px 20px 0 1px;
+}
+.game .left .char1{
+    background-position: -125px 0;
+}
+.game .left .char2{
+    background-position: -4px -97px;
+}
+.game .left .down:hover{
+    color: #38b774;
+}
+.game .left .down:hover .char2{
+    background-position: -124px -97px;
+}
+.game .right{
+    margin-top: 40px;
+}
+.game .right .gamebox1,
+.game .right .gamebox2,
+.game .right .gamebox3,
+.game .right .gamebox4{
+    float: left;
+    width: 355px;
+    height: 329px;
+    border: 1px solid #c7d6e5;
+    border-radius: 5px;
+    box-sizing: border-box;
+    padding: 0 12px;
+    background: #f7f7f7;
+}
+.game .right .gamebox1,
+.game .right .gamebox3{
+    margin-right: 50px;
+}
+.game .right .gamebox1,
+.game .right .gamebox2{
+    margin-bottom: 45px;
+}
+.game .right .gamebox1:hover,
+.game .right .gamebox2:hover,
+.game .right .gamebox3:hover,
+.game .right .gamebox4:hover{
+    background: white;
+}
+.game .right img{
+    width: 331px;
+    height: 195px;
+    cursor: pointer;
+}
+.game .right .pic:hover{
+    opacity: 0.8;
+}
+.right .gamename{
+    height: 60px;
+    display: block;
+    line-height: 62px;
+    text-align: center;
+    font-size: 17px;
+    cursor: pointer;
+    color: #444866;
+}
+.right .gamename:hover{
+    color: #38b774;
+}
+.right .gamename span{
+    color: #38b774;
+    margin-left: 5px;
+    font-size: 13px;
+}
+.right .gamename span::after{
+    content: "·";
+    color: transparent;
+    width: 15px;
+    height: 15px;
+    background: url(../images/arrow.png) no-repeat center;
+    margin-left: 10px;
+}
+.right .message{
+    height: 50px;
+    text-align: center;
+    padding: 20px 0;
+}
+.right .message span{
+    display: inline-block;
+    line-height: 38px;
+    height: 35px;
+    text-align: center;
+    padding: 0 20px;
+}
+.right .message span:hover{
+    color: #38b774;
+    cursor: pointer;
+}
+.right .message span:nth-of-type(1){
+    border-right: 1px solid #c7d6e5;
+}
+.right .message span:nth-of-type(1)::before{
+    width: 40px;
+    height: 50px;
+    content: "0";
+    color: transparent;
+    background: url(../images/pad.png);
+    background-position: 0 0;
+    background-size: 250px;
+    display: inline-block;
+}
+.right .message span:nth-of-type(2)::before{
+    width: 35px;
+    height: 35px;
+    content: "0";
+    color: transparent;
+    background: url(../images/ewm.png) no-repeat;
+    background-position: 0 0;
+    background-size: 100%;
+    display: inline-block;
+    margin-right: 12px;
+}
+.right .message .sec-code{
+    display: none;
+    position: absolute;
+    top: -131px;
+    right: 60px;
+    width: 140px;
+    height: 141px;
+    padding-top: 10px;
+    border-radius: 5px;
+    background: url(../images/ewmbg.png);
+}
+.right .message{
+    position: relative;
+}
+.right .message .sec-code img{
+    width: 116px;
+    height: 116px;
+    display: block;
+    margin: 0 auto;
+}
+.right .message span:nth-of-type(2):hover .sec-code{
+    display: block;
+}
+.site{
+    display: block;
+    position: fixed;
+    right: 15px;
+    bottom: 75px;
+    width: 68px;
+    height: 29px;
+    background: url(../images/top.png) no-repeat 0 -40px;
+    z-index: 999;
+}
+.site:hover{
+    background: url(../images/top.png) no-repeat 0 0;
+}
+footer{
+    background: #191d3a;
+    height: 193px;
+    padding-top: 10px;
+    position: relative;
+}
+footer p{
+    color: #6c6e7e;
+    line-height: 10px;
+    margin-top: 40px;
+    font-size: 13px;
+}
+footer img{
+    width: 40px;
+    height: 53px;
+    position: absolute;
+    bottom: 20px;
+    right: 26%;
+    cursor: pointer;
+}

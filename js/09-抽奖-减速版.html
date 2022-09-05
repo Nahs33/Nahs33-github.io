@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        li {
+            list-style: none;
+        }
+
+        .test {
+            width: 500px;
+            height: 500px;
+            margin: 50px auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+
+        .tipsBox {
+            width: 330px;
+            height: 50px;
+            border: 0;
+            box-shadow: 0px 0px 10px 0px rgb(203, 197, 197);
+            text-align: center;
+            line-height: 50px;
+        }
+
+        .gifts {
+            width: 330px;
+            height: 330px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gifts li {
+            width: 100px;
+            height: 100px;
+            margin: 0 5px;
+            background: skyblue;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            color: white;
+            border-radius: 50px;
+        }
+
+        .gifts li.begin {
+            background: pink;
+            cursor: pointer;
+        }
+
+        .gifts li.begin:hover {
+            background: rgb(236, 163, 175);
+            transform: scale(0.9);
+        }
+
+        .gifts li.luck {
+            background: rgb(168, 230, 253);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="test">
+        <div class="tipsBox"></div>
+
+        <ul class="gifts">
+            <li>手机</li>
+            <li>平板</li>
+            <li>电磁炉</li>
+            <li>电视</li>
+            <li class="begin">开始</li>
+            <li>洗衣机</li>
+            <li>电脑</li>
+            <li>冰箱</li>
+            <li>衣柜</li>
+        </ul>
+    </div>
+
+    <script>
+        // 1.点击开始，li的背景色顺时针变化01258763;
+        // 2.经过一段时间后停止转动，此时li的innerText写入tips框
+
+        var tipsBox = document.querySelector(".tipsBox");
+        var giftsLis = document.querySelectorAll(".gifts li")
+
+        // 存放对应下标
+        var num = [0, 1, 2, 5, 8, 7, 6, 3];
+
+        var count = 0;
+        var timer = null;
+        var tmp = 0;
+
+        // 封装随机数
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min + 1) + min)
+        }
+
+
+        // 抽奖转动 对应的li高亮 前一个移除背景色
+        function zhuan() {
+            if (count == 0) {
+                giftsLis[0].classList.add("luck");
+                giftsLis[num[7]].classList.remove("luck")
+                count++;
+            } else {
+                giftsLis[num[count]].classList.add("luck");
+                giftsLis[num[count - 1]].classList.remove("luck");
+                count++;
+                if (count == 8) {
+                    count = 0;
+                }
+            }
+
+        }
+
+
+        // 点击开始转动
+        giftsLis[4].onclick = function () {
+            // 产生一个暂停的随机数
+            var res = getRandom(60, 30)
+            console.log(res);
+
+            if (timer == null) {
+                tipsBox.innerHTML = "";
+                timer = setInterval(function () {
+
+                    // 转动个数累加
+                    tmp++;
+                    zhuan();
+
+                    if (tmp == res) {
+                        // 清除匀速转动
+                        clearInterval(timer);
+
+                        // tmp标志清零重新计数
+                        tmp = 0;
+                        // 开启减速定时器
+                        timer2 = setInterval(function () {
+                            tmp++;
+                            zhuan();
+
+                            if (tmp == 1) {
+                                clearInterval(timer2)
+                                timer3 = setInterval(function () {
+                                    tmp++;
+                                    zhuan();
+
+                                    if (tmp == 2) {
+                                        clearInterval(timer3);
+                                        timer4 = setInterval(function () {
+                                            tmp++;
+                                            zhuan();
+
+                                            if (tmp == 3) {
+                                                clearInterval(timer4);
+                                                // 重置timer 点击再次抽奖;
+                                                timer = null;
+
+                                                // 赋值结果
+                                                if (count != 0) {
+                                                    var content = giftsLis[num[count - 1]].
+                                                        innerText;
+                                                } else {
+                                                    content = giftsLis[num[7]].innerText
+                                                }
+                                                setTimeout(function () {
+                                                    tipsBox.innerHTML = "恭喜你获得了" + content;
+                                                }, 700)
+
+                                                // 清除抽奖结果
+                                                setTimeout(function () {
+                                                    giftsLis[num[count - 1]].classList.remove("luck")
+                                                }, 2500)
+
+                                            }
+                                        }, 1500)
+
+
+                                    }
+
+                                }, 1100)
+
+                            }
+
+                        }, 800)
+
+                    }
+
+                }, 100)
+
+            }
+
+        }
+
+
+    </script>
+</body>
+
+</html>
