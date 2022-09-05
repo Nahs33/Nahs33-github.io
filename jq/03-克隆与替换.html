@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./jquery-3.6.0.min.js"></script>
+    <style>
+        .logo {
+            /* 行内块级元素或者行内元素的HTML标签在回车换行的时候,会出现一个水平缝隙 */
+            /* display: inline-block; */
+            float: left;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 5px;
+            width: 200px;
+        }
+
+        .logo img {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <p>
+        <button id="btnCopy">克隆元素</button>
+        <button id="btnReplace">替换jQuery</button>
+    </p>
+    <div class="logo"><img src="./images/javascript.png"></div>
+
+    <script>
+        $("#btnCopy").on("click", function () {
+            var newImg = $(".logo").first().clone(true)
+            $("body").append(newImg)
+        })
+
+        var flag = true;
+        $("#btnReplace").on("click", function () {
+            if (flag) {
+                $(".logo img").attr("src", "./images/jquery.png")
+            } else {
+                $(".logo img").attr("src", "./images/javascript.png")
+            }
+            flag = !flag;
+        })
+    </script>
+</body>
+
+</html>
