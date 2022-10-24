@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
+    <style>
+        #main {
+            width: 600px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 给Echars准备一个dom -->
+    <div id="main"></div>
+
+    <script>
+        var myChart = echarts.init(document.getElementById("main"))
+
+        var option;
+
+        // 基础折线图
+        option = {
+            title: {
+                text: 'Stacked Line'
+            },
+            // legend (地图或书中图表的)图例,说明
+            legend: {
+                data: ['Email', 'Union Ads', 'Direct']
+            },
+            xAxis: {
+                type: 'category',
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    name: "Email",
+                    data: [150, 230, 224, 218, 135, 147, 260],
+                    type: 'line',
+                    // 开启平滑曲线
+                    smooth: true,
+                    // 面积
+                    areaStyle: {}
+                },
+                // 多组
+                {
+                    name: "Union Ads",
+                    data: [120, 132, 101, 134, 90, 230, 210],
+                    type: 'line',
+                    // 开启平滑曲线
+                    smooth: true,
+                    // 面积
+                },
+                {
+                    name: "Direct",
+                    data: [320, 332, 301, 334, 390, 330, 320],
+                    type: 'line',
+                    // 开启平滑曲线
+                    smooth: true,
+                    // 面积
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+    </script>
+</body>
+
+</html>

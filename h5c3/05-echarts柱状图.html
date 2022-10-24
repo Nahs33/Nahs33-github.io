@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.bootcdn.net/ajax/libs/echarts/5.3.3/echarts.min.js"></script>
+
+    <style>
+        #main {
+            width: 800px;
+            height: 400px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="main"></div>
+
+    <script>
+        // 基础柱状图 
+        var myChart = echarts.init(document.getElementById("main"));
+        var option;
+        option = {
+            aria: {
+                // 无障碍花纹
+                decal: {
+                    show: true,
+                },
+            },
+            title: {
+                text: "ECharts xcxxxx",
+            },
+            // 图列，说明
+            legend: {
+                data: ["one", "two", "three", "four", "five", "six","seven","eight"],
+            },
+            // 图标离容器的距离
+            grid: {
+                left: '3%',
+                right: '4%',
+                bottom: '3%',
+                containLabel: true
+            },
+            xAxis: {
+                type: 'category',
+                // 标签名
+                data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+                // 坐标轴刻度与标签对齐
+                axisTick: {
+                    alignWithLabel: true
+                }
+            },
+            yAxis: {
+                type: 'value'
+            },
+            series: [
+                {
+                    data: [
+                        1320,
+                        // 设置单个颜色
+                        {
+                            value: 300,
+                            itemStyle: {
+                                color: '#a90000'
+                            }
+                        },
+                        1200,
+                        680,
+                        770,
+                        1010,
+                        1230],
+                    name: "one",
+                    type: 'bar',
+                    // 开启背景色
+                    showBackground: true,
+                    backgroundStyle: {
+                        color: 'rgba(180, 180, 180, 0.2)'
+                    }
+                },
+                // 多组
+                {
+                    name: "two",
+                    type: 'bar',
+                    // 分类
+                    stack: 'Ad',
+                    data: [620, 900, 701, 734, 560, 930, 710]
+                },
+                {
+                    name: "three",
+                    type: 'bar',
+                    // 设置宽度
+                    barWidth: 10,
+                    // 分类
+                    stack: 'Search Engine',
+                    data: [320, 332, 301, 334, 390, 330, 320]
+                },
+                {
+                    name: "four",
+                    type: 'bar',
+                    stack: 'Search Engine',
+                    data: [120, 132, 101, 134, 290, 230, 220]
+                },
+                {
+                    name: "five",
+                    type: 'bar',
+                    stack: 'Search Engine',
+                    data: [60, 72, 71, 74, 190, 130, 110]
+                },
+                {
+                    name: "six",
+                    type: 'bar',
+                    stack: 'Search Engine',
+                    data: [62, 82, 91, 84, 109, 110, 120]
+                },
+                // 折柱混合
+                {
+                    name: 'seven',
+                    type: 'line',
+                    data: [200.0, 200.2, 300.3, 400.5, 600.3, 1000.2, 2000.3]
+                },
+                {
+                    name:'eight',
+                    type:"line",
+                    smooth:true,
+                    data:[1780,1990,1600,1520,1322,1835,1150]
+                }
+            ]
+        };
+
+        option && myChart.setOption(option);
+
+    </script>
+</body>
+
+</html>

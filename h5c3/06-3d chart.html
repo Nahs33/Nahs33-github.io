@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/3d.css">
+</head>
+
+<body>
+    <div class="background"></div>
+    <div class="box">
+        <div class="card">
+            <div class="photo"></div>
+            <h2>STEPS</h2>
+            <p>THIS WEEK</p>
+            <div class="chart">
+                <div class="bar bar1"></div>
+                <div class="bar bar2"></div>
+                <div class="bar bar3"></div>
+                <div class="bar bar4"></div>
+                <div class="bar bar5"></div>
+                <div class="bar bar6"></div>
+                <div class="bar bar7"></div>
+            </div>
+            <h3>93,000</h3>
+        </div>
+    </div>
+
+    <script>
+        document.querySelector(".box").onclick = function(){
+            document.body.classList.toggle("details")
+        }
+    </script>
+</body>
+
+</html>

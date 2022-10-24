@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            outline: 0;
+            border: 0;
+            box-sizing: border-box;
+            font-weight: bolder;
+            color: #666666;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        @keyframes Grow {
+            from {
+                transform: scale(1);
+            }
+
+            to {
+                transform: scale(1.2);
+            }
+        }
+
+        .Grow:hover {
+            animation: Grow 0.3s forwards;
+        }
+
+        @keyframes Pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            25% {
+                transform: scale(1.1);
+            }
+
+            50% {
+                transform: scale(1);
+            }
+
+            75% {
+                transform: scale(0.9);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .Pulse:hover {
+            animation: Pulse 0.8s infinite;
+        }
+
+        @keyframes BounceIn {
+            0% {
+                transform: scale(1);
+            }
+
+            60% {
+                transform: scale(1.3);
+            }
+
+            80% {
+                transform: scale(1.2);
+            }
+
+            100% {
+                transform: scale(1.3);
+            }
+        }
+
+        .BounceIn:hover {
+            animation: BounceIn 0.8s forwards;
+        }
+
+        @keyframes BounceOut {
+            0% {
+                transform: scale(1);
+            }
+
+            60% {
+                transform: scale(0.8);
+            }
+
+            80% {
+                transform: scale(0.7);
+            }
+
+            100% {
+                transform: scale(0.8);
+            }
+        }
+
+        .BounceOut:hover {
+            animation: BounceOut 0.8s forwards;
+        }
+
+        @keyframes Rotate {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(10deg);
+            }
+        }
+
+        .Rotate:hover {
+            animation: Rotate 0.3s forwards;
+        }
+
+        @keyframes RotateGrow {
+            0% {
+                transform: scale(1);
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: scale(1.1) rotate(10deg);
+            }
+        }
+
+        .RotateGrow:hover {
+            animation: RotateGrow 0.3s forwards;
+        }
+
+        @keyframes Float {
+            from {
+                translate: 0px 0px;
+            }
+
+            to {
+                translate: 0px -5px;
+            }
+        }
+
+        .Float:hover {
+            animation: Float 0.3s forwards ease-out;
+        }
+
+        @keyframes Sink {
+            from {
+                translate: 0px 0px;
+            }
+
+            to {
+                translate: 0px 5px;
+            }
+        }
+
+        .Sink:hover {
+            animation: Sink 0.3s forwards;
+        }
+
+        @keyframes Bob {
+            0% {
+                translate: 0px -7px;
+            }
+
+            50% {
+                translate: 0px -2px;
+            }
+
+            100% {
+                translate: 0px -7px;
+            }
+        }
+
+        .Bob:hover {
+            translate: 0 -7px;
+            animation: Bob 1s infinite ease-out;
+        }
+
+        @keyframes Hang {
+            0% {
+                translate: 0px 7px;
+            }
+
+            50% {
+                translate: 0px 2px;
+            }
+
+            100% {
+                translate: 0px 7px;
+            }
+        }
+
+        .Hang:hover {
+            translate: 0 7px;
+            animation: Hang 1s infinite ease-out;
+        }
+
+        @keyframes Skew {
+            from {
+                transform: skew(0deg);
+            }
+
+            to {
+                transform: skew(-15deg);
+            }
+        }
+
+        .Skew:hover {
+            animation: Skew 0.1s forwards linear;
+        }
+
+        @keyframes SkewForward {
+            from {
+                transform: skew(0deg);
+            }
+
+            to {
+                transform: skew(-15deg);
+                transform-origin: left bottom;
+            }
+        }
+
+        .SkewForward:hover {
+            animation: SkewForward 0.3s forwards linear;
+        }
+
+        @keyframes SkewBackward {
+            from {
+                transform: skew(0deg);
+            }
+
+            to {
+                transform-origin: right bottom;
+                transform: skew(15deg);
+            }
+        }
+
+        .SkewBackward:hover {
+            animation: SkewBackward 0.3s forwards linear;
+        }
+
+        @keyframes Forward {
+            from {
+                translate: 0 0;
+            }
+
+            to {
+                translate: 8px 0;
+            }
+        }
+
+        .Forward:hover {
+            animation: Forward 0.5s forwards linear;
+        }
+
+        @keyframes Backward {
+            from {
+                translate: 0 0;
+            }
+
+            to {
+                translate: -8px 0;
+            }
+        }
+
+        .Backward:hover {
+            animation: Backward 0.3s forwards linear;
+        }
+
+        @keyframes WobbleHorizontal {
+            0% {
+                translate: 0px 0px;
+            }
+
+            20% {
+                translate: 6px 0px;
+            }
+
+            40% {
+                translate: -5px 0px;
+            }
+
+            60% {
+                translate: 3px 0px;
+            }
+
+            80% {
+                translate: -2px 0px;
+            }
+
+            100% {
+                translate: 0px 0px;
+            }
+        }
+
+        .WobbleHorizontal:hover {
+            animation: WobbleHorizontal 0.7s forwards;
+        }
+
+        @keyframes WobbleVertical {
+            0% {
+                translate: 0px 0px;
+            }
+
+            20% {
+                translate: 0px 6px;
+            }
+
+            40% {
+                translate: 0px -5px;
+            }
+
+            60% {
+                translate: 0px 2px;
+            }
+
+            80% {
+                translate: 0px -2px;
+            }
+
+            100% {
+                translate: 0px 0px;
+            }
+        }
+
+        .WobbleVertical:hover {
+            animation: WobbleVertical 0.7s forwards ease-out;
+        }
+
+        @keyframes WobbleToBottomRight {
+            0% {
+                translate: 0px 0px;
+            }
+
+            20% {
+                translate: 3px 3px;
+            }
+
+            40% {
+                translate: -5px -5px;
+            }
+
+            60% {
+                translate: 1px 1px;
+            }
+
+            80% {
+                translate: -2px -2px;
+            }
+
+            100% {
+                translate: 0px 0px;
+            }
+        }
+
+        .WobbleToBottomRight:hover {
+            animation: WobbleToBottomRight 0.7s forwards ease-out;
+        }
+
+        @keyframes WobbleToTopRight {
+            0% {
+                translate: 0px 0px;
+            }
+
+            20% {
+                translate: -6px -6px;
+            }
+
+            40% {
+                translate: 3px 3px;
+            }
+
+            60% {
+                translate: -2px -2px;
+            }
+
+            80% {
+                translate: 1px px;
+            }
+
+            100% {
+                translate: 0px 0px;
+            }
+        }
+
+        .WobbleToTopRight:hover {
+            animation: WobbleToTopRight 0.7s forwards ease-out;
+        }
+
+        @keyframes WobbleTop {
+            0% {
+                transform: skew(0deg);
+            }
+
+            30% {
+                transform: skew(-20deg);
+            }
+
+            45% {
+                transform: skew(10deg);
+            }
+
+            60% {
+                transform: skew(-10deg);
+            }
+
+            80% {
+                transform: skew(5deg);
+            }
+
+            100% {
+                transform: skew(0deg);
+            }
+        }
+
+        .WobbleTop {
+            transform-origin: 0 100%;
+        }
+
+        .WobbleTop:hover {
+            animation: WobbleTop 1s linear;
+        }
+
+        @keyframes WobbleBottom {
+            0% {
+                transform: skew(0deg);
+            }
+
+            30% {
+                transform: skew(-20deg);
+            }
+
+            45% {
+                transform: skew(10deg);
+            }
+
+            60% {
+                transform: skew(-10deg);
+            }
+
+            80% {
+                transform: skew(5deg);
+            }
+
+            100% {
+                transform: skew(0deg);
+            }
+        }
+
+        .WobbleBottom {
+            transform-origin: 100% 0;
+        }
+
+        .WobbleBottom:hover {
+            animation: WobbleBottom 1s linear;
+        }
+
+        @keyframes WobbleSkew {
+            0% {
+                transform: skew(0deg);
+            }
+
+            30% {
+                transform: skew(-20deg);
+            }
+
+            45% {
+                transform: skew(10deg);
+            }
+
+            60% {
+                transform: skew(-10deg);
+            }
+
+            80% {
+                transform: skew(5deg);
+            }
+
+            100% {
+                transform: skew(0deg);
+            }
+        }
+
+        .WobbleSkew:hover {
+            animation: WobbleSkew 1s forwards ease-in-out;
+        }
+
+        @keyframes Buzz {
+            10% {
+                transform: rotate(2deg);
+            }
+
+            50% {
+                transform: rotate(-2deg);
+            }
+
+            70% {
+                transform: rotate(2deg);
+            }
+
+            100% {
+                transform: rotate(-2deg);
+            }
+        }
+
+        .Buzz:hover {
+            animation: Buzz 0.3s infinite;
+        }
+
+        @keyframes BuzzOut {
+            10% {
+                transform: rotate(2deg);
+            }
+
+            50% {
+                transform: rotate(-2deg);
+            }
+
+            70% {
+                transform: rotate(2deg);
+            }
+
+            100% {
+                transform: rotate(-2deg);
+            }
+        }
+
+        .Buzz,
+        .BuzzOut {
+            transform-origin: center bottom;
+        }
+
+        .BuzzOut:hover {
+            animation: BuzzOut 0.3s;
+            animation-iteration-count: 3;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="Grow">Grow</button>
+    <button class="Pulse">Pulse</button>
+    <button class="BounceIn">Bounce In</button>
+    <button class="BounceOut">Bounce Out</button>
+    <button class="Rotate">Rotate</button>
+    <button class="RotateGrow">RotateGrow</button>
+    <button class="Float">Float</button>
+    <button class="Sink">Sink</button>
+    <button class="Bob">Bob</button>
+    <button class="Hang">Hang</button>
+    <button class="Skew">Skew</button>
+    <button class="SkewForward">SkewForward</button>
+    <button class="SkewBackward">SkewBackward</button>
+    <button class="WobbleHorizontal">Wobble Horizontal</button>
+    <button class="WobbleVertical">Wobble Vertical</button>
+    <button class="WobbleToBottomRight">Wobble To Bottom Right</button>
+    <button class="WobbleToTopRight">Wobble To Top Right</button>
+    <button class="WobbleTop">WobbleTop</button>
+    <button class="WobbleBottom">Wobble Bottom</button>
+    <button class="WobbleSkew">Wobble Skew</button>
+    <button class="Buzz">Buzz</button>
+    <button class="BuzzOut">Buzz Out</button>
+    <button class="Forward">Forward</button>
+    <button class="Backward">Backward</button>
+
+</body>
+
+</html>

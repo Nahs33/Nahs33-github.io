@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        button {
+            padding: 10px 20px;
+            outline: 0;
+            border: 0;
+            box-sizing: border-box;
+            color: #666666;
+            background: #e1e1e1;
+            cursor: pointer;
+            margin: 5px;
+        }
+
+        button:hover {
+            color: white;
+        }
+
+        .Fade:hover {
+            background: #2098d1;
+            transition: 0.5s;
+        }
+
+        @keyframes BackPulse {
+            0% {
+                background: #2098d1;
+                opacity: 1;
+            }
+
+            50% {
+                background: #2098d1;
+                opacity: 0.9;
+            }
+
+            80% {
+                background: #2098d1;
+                opacity: 0.7;
+            }
+
+            100% {
+                background: #2098d1;
+                opacity: 0.9;
+            }
+        }
+
+        .BackPulse:hover {
+            animation: BackPulse 1s infinite;
+        }
+
+        .SweepToRight,
+        .SweepToLeft,
+        .SweepToTop,
+        .SweepToBottom,
+        .BounceToRight,
+        .BounceToLeft,
+        .BounceToTop,
+        .BounceToBottom {
+            position: relative;
+            z-index: 0;
+        }
+
+        .SweepToRight span::before {
+            content: "";
+            width: 0;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2098d1;
+            height: 100%;
+            transition: 0.5s;
+            transform-origin: 0 50%;
+            z-index: -1;
+        }
+
+        .SweepToRight:hover span::before {
+            width: 100%;
+        }
+
+        .SweepToLeft {
+            background: #2098d1;
+        }
+
+        .SweepToLeft span::before {
+            content: "";
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #e1e1e1;
+            height: 100%;
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .SweepToLeft:hover span::before {
+            width: 0;
+        }
+
+        .SweepToTop {
+            background: #2098d1;
+        }
+
+        .SweepToTop span::before {
+            content: "";
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #e1e1e1;
+            height: 100%;
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .SweepToTop:hover span::before {
+            height: 0;
+        }
+
+        .SweepToBottom span::before {
+            content: "";
+            width: 100%;
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: #2098d1;
+            height: 0;
+            transition: 0.5s;
+            z-index: -1;
+        }
+
+        .SweepToBottom:hover span::before {
+            height: 100%;
+        }
+
+        .BounceToRight span::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 0;
+            height: 100%;
+            background: #2098d1;
+        }
+
+        @keyframes BounceToRight {
+            70% {
+                width: 100%;
+            }
+
+            90% {
+                width: 92%;
+            }
+
+            100% {
+                width: 100%;
+            }
+        }
+
+        .BounceToRight:hover span::before {
+            animation: BounceToRight 0.6s forwards ease-out;
+        }
+
+        .BounceToLeft {
+            background: #2098d1;
+        }
+
+        .BounceToLeft span::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background: #e1e1e1;
+        }
+
+        @keyframes BounceToLeft {
+            70% {
+                width: 0;
+            }
+
+            90% {
+                width: 8%;
+            }
+
+            100% {
+                width: 0;
+            }
+        }
+
+        .BounceToLeft:hover span::before {
+            animation: BounceToLeft 0.6s forwards ease-in;
+        }
+
+        .BounceToTop {
+            background: #2098d1;
+        }
+
+        .BounceToTop span::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #e1e1e1;
+            z-index: -1;
+        }
+
+        @keyframes BounceToTop {
+            70% {
+                height: 0;
+            }
+
+            90% {
+                height: 8%;
+            }
+
+            100% {
+                height: 0;
+            }
+        }
+
+        .BounceToTop:hover span::before {
+            animation: BounceToTop 0.6s forwards ease-out;
+        }
+
+        .BounceToBottom span::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: #2098d1;
+            z-index: -1;
+        }
+
+        @keyframes BounceToBottom {
+            70% {
+                height: 100%;
+            }
+
+            90% {
+                height: 92%;
+            }
+
+            100% {
+                height: 100%;
+            }
+        }
+
+        .BounceToBottom:hover span::before {
+            animation: BounceToBottom 0.6s forwards ease-out;
+        }
+    </style>
+</head>
+
+<body>
+    <button class="Fade">Fade</button>
+    <button class="BackPulse">Back Pulse</button>
+    <button class="SweepToRight"><span>Sweep To Right</span></button>
+    <button class="SweepToLeft"><span>Sweep To Left</span></button>
+    <button class="SweepToTop"><span>Sweep To Top</span></button>
+    <button class="SweepToBottom"><span>Sweep To Bottom</span></button>
+    <button class="BounceToRight"><span>Bounce To Right</span></button>
+    <button class="BounceToLeft"><span>Bounce To Left</span></button>
+    <button class="BounceToTop"><span>Bounce To Top</span></button>
+    <button class="BounceToBottom"><span>Bounce To Bottom</span></button>
+</body>
+
+</html>

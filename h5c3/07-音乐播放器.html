@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.staticfile.org/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #dfe7ef;
+            position: relative;
+            z-index: -999;
+        }
+
+        .audiobox {
+            position: relative;
+            z-index: -5;
+            width: 410px;
+            height: 480px;
+            background: #ebf0f5;
+            margin: 100px auto;
+            border-radius: 20px;
+            box-shadow: 0 0 50px 0 #99abbc;
+            padding: 30px;
+            box-sizing: border-box;
+        }
+
+        .audiobox .cover {
+            position: relative;
+            /* z-index: 99; */
+            left: -55px;
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            background-image: url("./images/jonyj.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+
+        .audiobox .cover::after {
+            content: "";
+            width: 280px;
+            height: 300px;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            box-shadow: 0 0 20px 5px #1f3d59;
+            background-image: url("./images/jonyj.jpg");
+            background-size: cover;
+            filter: blur(10px);
+            opacity: 0.9;
+            z-index: -1;
+        }
+
+        .origin {
+            margin-top: 30px;
+        }
+
+        .origin h3 {
+            letter-spacing: 2px;
+            color: #6f7798;
+            margin-bottom: 5px;
+        }
+
+        .origin p {
+            color: #a6b2c4;
+        }
+
+
+
+        .btn {
+            position: absolute;
+            right: 45px;
+            top: 30px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            z-index: 99999;
+        }
+
+        .btn i {
+            display: block;
+            width: 30px;
+            height: 30px;
+            font-size: 30px;
+            color: #acb8cc;
+            margin-bottom: 5px;
+            padding: 10px;
+            border-radius: 50px;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+        }
+
+        .btn i:last-child {
+            color: rgba(255, 255, 255, 0.842);
+            font-size: 40px;
+            padding: 20px;
+            position: absolute;
+            bottom: -100px;
+            right: -20px;
+            line-height: 30px;
+            border: 10px solid #ffffffe0;
+        }
+
+        .btn i:last-child::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            border-radius: 50px;
+            box-shadow: 0 0 50px 0 #83878b;
+        }
+
+        .btn i:not(:last-child):hover {
+            color: #11344a;
+        }
+
+        label {
+            height: 6px;
+            position: relative;
+            top: 30px;
+            display: block;
+            border-radius: 30px;
+            overflow: hidden;
+        }
+
+        .Progressbar {
+            width: 100%;
+            height: 100%;
+            background: #d0d8e6;
+            border-radius: 30px;
+            position: absolute;
+            z-index: -1;
+        }
+
+        .Progressbar .time {
+            width: 0%;
+            height: 100%;
+            border-radius: 30px;
+            background: #11344a;
+        }
+
+        input {
+            width: 100%;
+            position: absolute;
+            display: block;
+            opacity: 0;
+            top: -5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="audiobox">
+        <div class="cover">
+        </div>
+        <div class="btn">
+            <i class="fa fa-heart"></i>
+            <i class="fa fa-share-square-o"></i>
+            <i class="fa fa-mail-reply prev"></i>
+            <i class="fa fa-mail-forward next"></i>
+            <i class="fa fa-play"></i>
+        </div>
+        <div class="origin">
+            <h3>山脚</h3>
+            <p>Jony J</p>
+        </div>
+        <label>
+            <div class="Progressbar">
+                <div class="time"></div>
+            </div>
+            <input type="range" value="0" step="0.01">
+        </label>
+    </div>
+
+    <!-- 音频 -->
+    <audio></audio>
+
+    <script>
+        var play = document.querySelector(".btn i:last-child")
+        var audio = document.querySelector("audio")
+        var Progressbar = document.querySelector(".Progressbar .time")
+        var prev = document.querySelector(".prev")
+        var next = document.querySelector(".next")
+        var songName = document.querySelector(".origin h3")
+        var input = document.querySelector("input")
+
+        var index = 1;
+        var songs = [
+            {
+                songName: "欢迎光临",
+                src: "./MP3/欢迎光临.mp3"
+            },
+            {
+                songName: "山脚",
+                src: "./MP3/山脚.mp3"
+            },
+            {
+                songName: "不用去猜",
+                src: "./MP3/不用去猜.mp3"
+            }
+        ]
+
+        var flag = true;
+        function audioplay() {
+
+            audio.src = songs[index].src;
+            songName.innerHTML = songs[index].songName;
+            audio.play();
+            play.className = "fa fa-pause";
+
+            if (flag) {
+                play.classList.replace("fa-play", "fa-pause")
+                audio.play();
+                flag = false;
+            } else {
+                play.classList.replace("fa-pause", "fa-play")
+                audio.pause();
+                flag = true;
+            }
+
+            input.oninput = function () {
+                Progressbar.style.width = this.value + "%";
+                audio.currentTime = (this.value * audio.duration) / 100;
+            }
+
+            audio.ontimeupdate = function () {
+                Progressbar.style.width = (audio.currentTime / audio.duration) * 100 + "%";
+                input.value = (audio.currentTime / audio.duration) * 100;
+
+                // 自动播放下一首
+                if (audio.ended) {
+                    index = index >= songs.length - 1 ? 0 : ++index;
+                    flag = true;
+                    setTimeout(function () {
+                        audioplay();
+                    }, 1000)
+                }
+            }
+
+        }
+
+        play.onclick = function () {
+            audioplay();
+        }
+
+        prev.onclick = function () {
+            index = index <= 0 ? songs.length - 1 : --index;
+            flag = true;
+            audioplay();
+        }
+
+        next.onclick = function () {
+            index = index >= songs.length - 1 ? 0 : ++index;
+            flag = true;
+            audioplay();
+        }
+    </script>
+</body>
+
+</html>
